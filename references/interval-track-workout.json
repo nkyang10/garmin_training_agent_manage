@@ -1,0 +1,182 @@
+{
+  "_comment": "Working example: 6x800m @ 4:25/km (lap.button) + 6x600m @ 4:15/km (lap.button) + 90s recovery. Created via upload_workout() with raw JSON.",
+  "_verified_on": "2026-06-02 via Garmin Connect API (HTTP 200, workoutId 1587985304)",
+  "_caveats": [
+    "stepOrder IS the ordering mechanism — API sorts by it, not array position",
+    "stepTypeId:5 with key:'cooldown' is normalized to 'rest' by API (cosmetic only)",
+    "PUT modification may silently drop warmup/cooldown steps — prefer delete+recreate for structural changes"
+  ],
+  "workoutName": "20260602",
+  "sportType": {
+    "sportTypeId": 1,
+    "sportTypeKey": "running"
+  },
+  "estimatedDurationInSecs": 5400,
+  "workoutSegments": [
+    {
+      "segmentOrder": 1,
+      "sportType": {
+        "sportTypeId": 1,
+        "sportTypeKey": "running"
+      },
+      "workoutSteps": [
+        {
+          "_description": "Warmup 10min jog (time-based, no target)",
+          "type": "ExecutableStepDTO",
+          "stepOrder": 1,
+          "stepType": {
+            "stepTypeId": 1,
+            "stepTypeKey": "warmup"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "description": "Warmup 10min jog"
+        },
+        {
+          "_description": "6x800m @ 4:25/km (lap.button + pace zone 3.704-3.846 m/s = 4:30-4:20/km)",
+          "type": "RepeatGroupDTO",
+          "stepOrder": 2,
+          "stepType": {
+            "stepTypeId": 7,
+            "stepTypeKey": "repeat",
+            "displayOrder": 7
+          },
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepOrder": 1,
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval",
+                "displayOrder": 3
+              },
+              "endCondition": {
+                "conditionTypeId": 1,
+                "conditionTypeKey": "lap.button"
+              },
+              "endConditionValue": 800.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "pace.zone"
+              },
+              "targetValueOne": 3.704,
+              "targetValueTwo": 3.846,
+              "description": "800m @ 4:25/km"
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepOrder": 2,
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery",
+                "displayOrder": 4
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 90.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "description": "Jog 90s"
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "smartRepeat": false
+        },
+        {
+          "_description": "6x600m @ 4:15/km (lap.button + pace zone 3.846-4.000 m/s = 4:20-4:10/km)",
+          "type": "RepeatGroupDTO",
+          "stepOrder": 3,
+          "stepType": {
+            "stepTypeId": 7,
+            "stepTypeKey": "repeat",
+            "displayOrder": 7
+          },
+          "numberOfIterations": 6,
+          "workoutSteps": [
+            {
+              "type": "ExecutableStepDTO",
+              "stepOrder": 1,
+              "stepType": {
+                "stepTypeId": 3,
+                "stepTypeKey": "interval",
+                "displayOrder": 3
+              },
+              "endCondition": {
+                "conditionTypeId": 1,
+                "conditionTypeKey": "lap.button"
+              },
+              "endConditionValue": 600.0,
+              "targetType": {
+                "workoutTargetTypeId": 6,
+                "workoutTargetTypeKey": "pace.zone"
+              },
+              "targetValueOne": 3.846,
+              "targetValueTwo": 4.0,
+              "description": "600m @ 4:15/km"
+            },
+            {
+              "type": "ExecutableStepDTO",
+              "stepOrder": 2,
+              "stepType": {
+                "stepTypeId": 4,
+                "stepTypeKey": "recovery",
+                "displayOrder": 4
+              },
+              "endCondition": {
+                "conditionTypeId": 2,
+                "conditionTypeKey": "time"
+              },
+              "endConditionValue": 90.0,
+              "targetType": {
+                "workoutTargetTypeId": 1,
+                "workoutTargetTypeKey": "no.target"
+              },
+              "description": "Jog 90s"
+            }
+          ],
+          "endCondition": {
+            "conditionTypeId": 7,
+            "conditionTypeKey": "iterations"
+          },
+          "endConditionValue": 6.0,
+          "smartRepeat": false
+        },
+        {
+          "_description": "Cooldown 10min jog (time-based, no target — stepTypeId:5 maps to 'rest' not 'cooldown')",
+          "type": "ExecutableStepDTO",
+          "stepOrder": 4,
+          "stepType": {
+            "stepTypeId": 5,
+            "stepTypeKey": "cooldown"
+          },
+          "endCondition": {
+            "conditionTypeId": 2,
+            "conditionTypeKey": "time"
+          },
+          "endConditionValue": 600.0,
+          "targetType": {
+            "workoutTargetTypeId": 1,
+            "workoutTargetTypeKey": "no.target"
+          },
+          "description": "Cooldown 10min jog"
+        }
+      ]
+    }
+  ]
+}
