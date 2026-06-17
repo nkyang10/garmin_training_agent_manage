@@ -34,7 +34,7 @@ Then in Python (use environment variables — never hardcode credentials):
 
 ```python
 import os
-from safe_garmin import SafeGarmin
+from garmin_training_agent_manage import SafeGarmin
 
 client = SafeGarmin(
     os.environ["GARMIN_EMAIL"],
@@ -83,14 +83,14 @@ Never upload or schedule workouts directly without user approval. This is a hard
 
 ```bash
 # SafeGarmin self-test (no API calls needed)
-python3 safe_garmin.py
+python3 -m garmin_training_agent_manage
 # → Prints ✓/✗ for each blocked vs allowed method
 ```
 
 ### Python API
 
 ```python
-from safe_garmin import SafeGarmin, SafeGarminError
+from garmin_training_agent_manage import SafeGarmin, SafeGarminError
 
 client = SafeGarmin("email", "password")
 client.login()                          # → None (saves token to ~/.garminconnect/)
@@ -125,7 +125,7 @@ client.delete_workout(123)  # → raises SafeGarminError 🛡️
 Always use `SafeGarmin` instead of raw `Garmin` to prevent accidental data loss:
 
 ```python
-from safe_garmin import SafeGarmin
+from garmin_training_agent_manage import SafeGarmin
 
 client = SafeGarmin("email", "password")
 client.login()
@@ -141,7 +141,7 @@ client.login()
 #   client.get_workouts()
 ```
 
-The full source is at [`safe_garmin.py`](safe_garmin.py) — 100 lines, no external deps beyond `garminconnect`.
+The full source is at [`garmin_training_agent_manage/safe_garmin.py`](garmin_training_agent_manage/safe_garmin.py) — 100 lines, no external deps beyond `garminconnect`.
 
 ## Distance-Based Steps (Track Workouts)
 
@@ -193,7 +193,7 @@ Reference architecture patterns in [`references/mobile-integration.md`](referenc
 
 | File | Description |
 |------|-------------|
-| [`safe_garmin.py`](safe_garmin.py) | SafeGarmin wrapper source (100 LOC) |
+| [`garmin_training_agent_manage/safe_garmin.py`](garmin_training_agent_manage/safe_garmin.py) | SafeGarmin wrapper source (100 LOC) |
 | [`references/garmin-target-type-ids.md`](references/garmin-target-type-ids.md) | Brute-force results of all 10 targetTypeId values |
 | [`references/interval-track-workout.json`](references/interval-track-workout.json) | Working 6×800m + 6×600m track session JSON |
 | [`references/mobile-integration.md`](references/mobile-integration.md) | iOS backend, bookmarklet, and OAuth patterns |

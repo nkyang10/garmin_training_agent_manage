@@ -10,8 +10,9 @@ authors = [
 dependencies = [
     "garminconnect>=0.3.3",
 ]
+optional-dependencies = { dev = ["pytest>=7.0", "ruff>=0.1.0"] }
 classifiers = [
-    "Development Status :: 4 - Beta",
+    "Development Status :: 5 - Production/Stable",
     "Intended Audience :: Developers",
     "License :: OSI Approved :: MIT License",
     "Programming Language :: Python :: 3",
@@ -23,6 +24,9 @@ classifiers = [
 Homepage = "https://github.com/nkyang10/garmin_training_agent_manage"
 Repository = "https://github.com/nkyang10/garmin_training_agent_manage"
 Issues = "https://github.com/nkyang10/garmin_training_agent_manage/issues"
+
+[tool.setuptools.packages.find]
+include = ["garmin_training_agent_manage*"]
 
 [build-system]
 requires = ["setuptools>=68.0"]

@@ -5,7 +5,9 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).parent.parent
-SCRIPT = ROOT / "safe_garmin.py"
+PACKAGE = ROOT / "garmin_training_agent_manage"
+SCRIPT = PACKAGE / "safe_garmin.py"
+LEGACY_SCRIPT = ROOT / "safe_garmin.py"
 
 
 def test_self_test_script_runs():
@@ -19,6 +21,17 @@ def test_self_test_script_runs():
     assert result.returncode == 0
 
 
+def test_legacy_shim_runs():
+    """The root-level safe_garmin.py shim should also work."""
+    result = subprocess.run(
+        [sys.executable, str(LEGACY_SCRIPT)],
+        capture_output=True, text=True,
+    )
+    print(result.stdout)
+    assert result.returncode == 0
+    assert "blocked" in result.stdout
+
+
 def test_self_test_output_contains_blocked_markers():
     """Output should show blocked methods as ✓ and safe methods as ✓."""
     result = subprocess.run(
@@ -27,7 +40,6 @@ def test_self_test_output_contains_blocked_markers():
     )
     assert "blocked" in result.stdout
     assert "accessible" in result.stdout
-    # Should mention the key methods
     assert "delete_activity" in result.stdout
     assert "delete_workout" in result.stdout
     assert "upload_running_workout" in result.stdout
@@ -100,16 +112,37 @@ def test_blocked_methods_via_getattribute():
 
     obj = object.__new__(mod.SafeGarmin)
 
-    # delete_activity should be intercepted by __getattribute__
     try:
         obj.delete_activity(42)
         assert False, "Should have raised SafeGarminError"
     except mod.SafeGarminError as e:
         assert "Deleting activities" in str(e)
 
-    # unschedule should be intercepted
     try:
         obj.unschedule_workout(99)
         assert False, "Should have raised SafeGarminError"
     except mod.SafeGarminError as e:
         assert "Unscheduling workouts" in str(e)
+
+
+def test_package_import():
+    """Test importing from the package works."""
+    import importlib.util
+    pkg_init = PACKAGE / "__init__.py"
+    spec = importlib.util.spec_from_file_location("garmin_training_agent_manage", pkg_init)
+    mod = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mod)
+    assert hasattr(mod, "SafeGarmin")
+    assert hasattr(mod, "SafeGarminError")
+    assert hasattr(mod, "__version__")
+
+
+def test_module_as_main():
+    """Test python3 -m garmin_training_agent_manage works."""
+    result = subprocess.run(
+        [sys.executable, "-m", "garmin_training_agent_manage"],
+        capture_output=True, text=True,
+        cwd=str(ROOT),
+    )
+    assert result.returncode == 0
+    assert "blocked" in result.stdout
