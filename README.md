@@ -68,6 +68,17 @@ print(f"✅ Workout scheduled! ID: {result['workoutId']}")
 
 This project is designed to be used by other AI coding agents.
 
+### ⚠️ Mandatory Workflow: Show Before Upload
+
+**CRITICAL RULE:** When an AI agent is managing workouts for a user, the workflow MUST be:
+
+1. Plan workouts based on user's goals and schedule
+2. Present the complete plan (dates, workout names, step details, pace targets) for user review
+3. Wait for explicit user confirmation ("放上去" / "ok" / "confirm")
+4. Only then upload + schedule to Garmin Connect
+
+Never upload or schedule workouts directly without user approval. This is a hard requirement.
+
 ### CLI Usage
 
 ```bash
